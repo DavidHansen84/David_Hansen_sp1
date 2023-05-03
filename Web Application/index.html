@@ -15,8 +15,7 @@
     <div class="container-fluid">
       <a class="navbar-brand" href="#"></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle
-  navigation">
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
@@ -59,7 +58,7 @@
     <div class="h3">Staff</div>
 
     <div class="p-3">
-            <table class="table table-striped table-bordered table-hover rounded">
+            <table id="staffTable" class="table table-striped table-bordered table-hover rounded">
                 <thead>
                 <tr>
                     <th scope="col">Picture</th>
@@ -73,61 +72,12 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>test</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>test</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>test</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>test</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>test</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                
                 </tbody>
                 
             </table>
-            <button type="button" class="btn negative">Out</button>
-            <input type="button" class="btn positive" value="In" style="float: right;">
+            <input onclick="outBtn()" type="button" class="btn negative" value="Out" style="float: left;">
+            <input onclick="inBtn()" type="button" class="btn positive" value="In" style="float: right;">
     </div>
 
     <div class="h3">Schedule Delivery</div>
@@ -146,23 +96,23 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td><input id="vehicle"></td>
-                    <td><input id="name"></td>
-                    <td><input id="surname"></td>
-                    <td><input id="telephone">-<input id="telephone2">-<input id="telephone3"></td>
-                    <td><input id="adress"></td>
-                    <td><input id="returnTime">:<input id="returnTime2"></td>
+                    <td><input id="sVehicle"></td>
+                    <td><input id="sName"></td>
+                    <td><input id="sSurname"></td>
+                    <td><input id="sTelephone"></td>
+                    <td><input id="sAdress"></td>
+                    <td><input id="sReturnTime"></td>
                 </tr>
                 </tbody>
             </table>
-            <input type="button" class="btn positive" value="Add" style="float: right;">
+            <input onclick="addBtn()" type="button" class="btn positive" value="Add" style="float: right;">
     </div>
     
 
     <div class="h3">Delivery Board</div>
 
     <div class="p-3">
-            <table class="table table-striped table-bordered table-hover rounded">
+            <table id="deliveryTable" class="table table-striped table-bordered table-hover rounded">
                 <thead>
                 <tr>
                     <th scope="col">Vehicle</th>
@@ -174,13 +124,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>test</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                <tr onclick="active">
+                  
                 </tr>
                 </tbody>
             </table>
@@ -188,9 +133,10 @@
     </div>
     <br>
     <div id="time" style="float: right;"></div>
-    
+
     <script src="https://code.jquery.com/jquery-3.6.1.min.js" crossorigin="anonymous"></script>
     <script src="./js/wdt_app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-</body>
+    
+  </body>
 </html>
