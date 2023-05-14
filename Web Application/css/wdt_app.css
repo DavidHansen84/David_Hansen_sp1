@@ -5,6 +5,9 @@
 }
 
 .table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
     border-radius: 10px;
     border: 1px solid #212529; 
 } 
@@ -13,6 +16,7 @@ thead {
     font-family: Consolas;
     background-color: #0E8EA8;
     color: #fff;  
+    
 }
 
 tbody {
@@ -21,17 +25,28 @@ tbody {
     background: #83D1E1;
 }
 
-img {
-    width: 150px;
-    height: 150px;
+.h1 {
+    position: relative;
 }
 
-input {
+.figure {
+    position: absolute;
+    left: 20px;
+    width: 130px;
+    height: 130px;
+}
+
+.input {
+    background: #83D1E1;
+    border: #fff;
+    border-bottom: 1px solid #212529;
+    width: 75%;
+}
+.input2 {
     background: #83D1E1;
     border: #fff;
     border-bottom: 1px solid #212529;
 }
-
 .negative {
     background-color: #dc3545;
 }
@@ -66,4 +81,11 @@ nav {
 #picture{
     height: 40px;
     width: 40px;
+}
+
+.bi, .fa {
+    font-size: 25px;
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
 }
