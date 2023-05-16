@@ -1,5 +1,7 @@
+// DIGITAL CLOCK
+
 let currentDate = new Date().toLocaleString();
-// Digital clock to show time and date
+
 function digitalClock() {
     setInterval(function(){
         currentDate = new Date().toLocaleString();
@@ -19,14 +21,15 @@ class Employee {
 let toastCounter = 1;
 
 class StaffMember extends Employee {
-    constructor(Name, surname, picture, email, duration){
+    constructor(Name, surname, picture, email, duration, status){
         super(Name, surname)
         this.picture = picture;
         this.email = email;
         this.returnTime = null;
         this.duration = duration;
+        this.status = status;
     };
-    
+        // TOAST
     staffMemberIsLate(returnTime) {
         let toastContainer = document.getElementById("toastContainer");
         let newDiv = document.createElement("div");
@@ -43,7 +46,7 @@ class StaffMember extends Employee {
 
         let toastText =  `${this.name} ${this.surname} ${this.email} is late. ${this.name} has been away for ${this.duration}`;
         let toastPic = `${this.picture}`;
-        console.log(toastPic)
+
         let staffMessage = document.getElementById("staffMessage"+`${toastCounter}`)
         staffMessage.innerText = toastText;
         let toastPicture = document.getElementById("toastPic"+`${toastCounter}`)
@@ -64,6 +67,7 @@ class DeliveryDriver extends Employee {
         this.returnTime = returnTime;
         
     };
+        // TOAST
     deliveryDriverIsLate(returnTime){
         let toastContainer = document.getElementById("toastContainer");
         let newDiv = document.createElement("div");
@@ -78,8 +82,7 @@ class DeliveryDriver extends Employee {
     </div>`;
     toastContainer.appendChild(newDiv);
 
-        let toastText = `Delivery driver ${this.name} ${this.surname} (${this.telephone}) is late. Expected return time was ${this.returnTime}`;
-        console.log(toastText);
+        let toastText = `Delivery driver ${this.name} ${this.surname} (${this.telephone}) is late. Expected return time was ${this.returnTime}. The driver was delivering to ${this.adress}.`;
         
         let staffMessage = document.getElementById("deliveryMessage"+`${toastCounter}`)
         staffMessage.innerText = toastText;
@@ -96,6 +99,7 @@ staffUserGet()
 
 function staffUserGet(){
     // WHEN CREATING OWN USERS DELETE THIS RANDOM USER GENERATOR <
+    // I used and edited version of this (https://stackoverflow.com/questions/73550934/using-fetch-and-randomuser-me-how-do-i-return-multiple-results)
     $.ajax({
         url: 'https://randomuser.me/api/?results=5',
         success: function(data) {
@@ -107,23 +111,22 @@ function staffUserGet(){
         // END OF RANDOM USER GENERATOR >>
 
         // CREATE OWN USERS HERE. ADD OR DELETE LINES AS NEEDED. BUT FOLLOW THIS FORMAT
-        // {"name": "user1", "surname": "user1", "picture": "user1", "email": "user1"},
-        // {"name": "user2", "surname": "user2", "picture": "user2", "email": "user2"}
+        // REMEMBER TO PUT THE CORRECT STAFF PICTURE IN THE IMG FOLDER WITH THE CORRECT NAME
+        // {"name": "user1", "surname": "user1", "picture": "./img/user1.jpg", "email": "user1"},
+        // {"name": "user2", "surname": "user2", "picture": "./img/user2.jpg", "email": "user2"}
         // INSIDE OF THE [ ]
 let staffMembers = [
-    {"name": `${user1.name.first}`, "surname": `${user1.name.last}`, "picture": `${user1.picture.large}`, "email": `${user1.email}`},
-    {"name": `${user2.name.first}`, "surname": `${user2.name.last}`, "picture": `${user2.picture.large}`, "email": `${user2.email}`},
-    {"name": `${user3.name.first}`, "surname": `${user3.name.last}`, "picture": `${user3.picture.large}`, "email": `${user3.email}`},
-    {"name": `${user4.name.first}`, "surname": `${user4.name.last}`, "picture": `${user4.picture.large}`, "email": `${user4.email}`},
-    {"name": `${user5.name.first}`, "surname": `${user5.name.last}`, "picture": `${user5.picture.large}`, "email": `${user5.email}`}
+    {"name": `${user1.name.first}`, "surname": `${user1.name.last}`, "picture": `${user1.picture.large}`, "email": `${user1.email}`, "duration": "", "status": ""},
+    {"name": `${user2.name.first}`, "surname": `${user2.name.last}`, "picture": `${user2.picture.large}`, "email": `${user2.email}`, "duration": "", "status": ""},
+    {"name": `${user3.name.first}`, "surname": `${user3.name.last}`, "picture": `${user3.picture.large}`, "email": `${user3.email}`, "duration": "", "status": ""},
+    {"name": `${user4.name.first}`, "surname": `${user4.name.last}`, "picture": `${user4.picture.large}`, "email": `${user4.email}`, "duration": "", "status": ""},
+    {"name": `${user5.name.first}`, "surname": `${user5.name.last}`, "picture": `${user5.picture.large}`, "email": `${user5.email}`, "duration": "", "status": ""}
 ];
-// console.log(staffMembers[0].picture)
     // GENERATING CLASS AND TABLE
 
 for(let i = 0; i <= staffMembers.length -1; i++) {
 
     let staff = new StaffMember(staffMembers[i].name, staffMembers[i].surname, staffMembers[i].picture, staffMembers[i].email)
-    // console.log(staff.picture)
 
     var table = document.getElementById("staffTable").getElementsByTagName("tbody")[0];
 
@@ -141,12 +144,12 @@ for(let i = 0; i <= staffMembers.length -1; i++) {
     name.innerHTML = "<p>"+staff.name+"</p>";
     surname.innerHTML = "<p>"+staff.surname+"</p>";
     email.innerHTML = "<p>"+staff.email+"</p>";
-    status.innerHTML = "<p></p>";
+    status.innerHTML = "<p>"+staff.status+"</p>";
     outTime.innerHTML = "<p></p>";
-    duration.innerHTML = "<p></p>";
+    duration.innerHTML = "<p>"+staff.duration+"</p>";
     expectedReturnTime.innerHTML = "<p></p>";
 
-    // clicking on Staff pictures opens the staff info in a new window
+    // clicking on Staff pictures opens the staff picture in a new window
 
     $("table img").click(function(){
         window.open($(this).attr('src'));
@@ -156,6 +159,7 @@ for(let i = 0; i <= staffMembers.length -1; i++) {
 });
 };
 
+    // CHANGE STATUS OF STAFF MEMBER TO OUT AND PROMPT 
 function outBtn() {
     const rows = document.querySelectorAll("#staffTable tbody tr");
 
@@ -166,8 +170,11 @@ function outBtn() {
 
     function handleRowClick(event) {
     const cells = event.currentTarget.cells;
-
+    // got this from (https://codingbeautydev.com/blog/javascript-convert-minutes-to-hours-and-minutes/?utm_content=cmp-true)
     const howLong = prompt("Duration of out time? (in minutes)", 30);
+    if (howLong === null) {
+        return;
+    }
     var hours = Math.floor(howLong / 60);
     var remainingMinutes = howLong % 60;
 
@@ -177,8 +184,8 @@ function outBtn() {
     const returnTime = cells[7];
 
     status.innerHTML = "<p>Out</p>";
-    outTime.innerHTML = ("<p>" + currentDate + "</p>");
-    duration.innerHTML = ("<p>" + hours + " hr and " + remainingMinutes + " min </p>");
+    outTime.innerHTML = "<p>" + currentDate + "</p>";
+    duration.innerHTML = "<p>" + hours + " hr and " + remainingMinutes + " min </p>";
 
     var now = new Date();
     now.setMinutes(now.getMinutes() + remainingMinutes);
@@ -222,8 +229,7 @@ function outBtn() {
     }
 }
 
-
-
+    // CHANGE STATUS OF STAFF MEMBER TO IN
 function inBtn() {
     const rows = document.querySelectorAll("#staffTable tbody tr");
 
@@ -251,8 +257,7 @@ function inBtn() {
 };
 };
 
-// Add deliveries to delivery board from the scheduele delivery
-
+    //ADD DEØIVERIES TO DELIVERY BOARD FROMT THE SCHEDUELE DELIVERY
 function addBtn() {
     const sVehicle = document.getElementById("sVehicle").value;
     const sName = document.getElementById("sName").value;
@@ -324,7 +329,6 @@ function createDeliveryTable(driver) {
         if (currentHours < 10) {
             currentHours = "0" + currentHours;
         }
-        console.log("Im running")
         const timeCorrectFormat = currentHours+":"+currentMinutes;
         if (timeCorrectFormat == driver.returnTime) {
             if (row.parentNode) {
@@ -335,7 +339,7 @@ function createDeliveryTable(driver) {
         }
     }, 1000);
 }
-    
+    // CLEAR THE ROW OF DELIVERY DRIVER
 function clearBtn() {
     const rows = document.querySelectorAll("#deliveryTable tbody tr");
 
