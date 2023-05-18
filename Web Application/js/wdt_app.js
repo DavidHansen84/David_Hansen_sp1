@@ -58,7 +58,6 @@ class StaffMember extends Employee {
 };
 };
 
-
 class DeliveryDriver extends Employee {
     constructor(Name, surname, vehicle, telephone, adress, returnTime){
         super(Name, surname)
@@ -91,11 +90,7 @@ class DeliveryDriver extends Employee {
         
     toastCounter++
 };
-
 };
-
-let StaffId = 1;
-
         // CREATE OWN USERS HERE. ADD OR DELETE LINES AS NEEDED. BUT FOLLOW THIS FORMAT
         // REMEMBER TO PUT THE CORRECT STAFF PICTURE IN THE IMG FOLDER WITH THE CORRECT NAME
         // {"name": "user1", "surname": "user1", "picture": `./img/user1.jpg`, "email": "user1"},
@@ -112,6 +107,7 @@ if (staffMembers.length === 0) {
     createStaffTable();
 };
 
+    // GET RANDOM USERS
 function staffUserGet(){
     // I used and edited version of this (https://stackoverflow.com/questions/73550934/using-fetch-and-randomuser-me-how-do-i-return-multiple-results)
     $.ajax({
@@ -136,7 +132,7 @@ staffMembers.push(...GeneratedStaffMembers);
 });
 };
 
-// GENERATING CLASS AND TABLE
+// GENERATING TABLE WITH STAFFMEMBERS
 function createStaffTable() {
 for(let i = 0; i <= staffMembers.length -1; i++) {
 
@@ -166,7 +162,9 @@ for(let i = 0; i <= staffMembers.length -1; i++) {
     expectedReturnTime.innerHTML = "<p></p>";
 };
 };
+
     // CHANGE STATUS OF STAFF MEMBER TO OUT AND PROMPT 
+
 function staffOut() {
     const rows = document.querySelectorAll("#staffTable tbody tr");
 
@@ -188,6 +186,8 @@ function staffOut() {
     let hours = Math.floor(howLong / 60);
     let remainingMinutes = howLong % 60;
 
+    // FIXING CORRECT FORMAT OF THE TIME
+
     if (nowHours < 10) {
         nowHours = "0" + nowHours;
     }
@@ -202,19 +202,21 @@ function staffOut() {
     const outTime = cells[5];
     const duration = cells[6];
     const returnTime = cells[7];
-    
+
+    // UPDATING THE OBJECT
+
     staffMembers[id].status = "out";
     staffMembers[id].outTime = nowHours +":"+ nowMinutes;
     staffMembers[id].duration = hours + " hr and " + remainingMinutes + " min";
+
+    // UPDATING THE TABLE USING THE UPDATED OBJECT
 
     status.innerHTML = "<p>" + staffMembers[id].status + "</p>";
     outTime.innerHTML = "<p>" + staffMembers[id].outTime + "</p>";
     duration.innerHTML = "<p>" + staffMembers[id].duration + "</p>";
 
-    
     now.setMinutes(now.getMinutes() + remainingMinutes);
     now.setHours(now.getHours() + hours);
-
     hours = now.getHours();
     let minutes = now.getMinutes();
 
@@ -223,13 +225,13 @@ function staffOut() {
     }
 
     staffMembers[id].returnTime = hours + ":" + minutes;
-
     returnTime.innerHTML = "<p>" + staffMembers[id].returnTime + "</p>";
 
     rows.forEach((row) => {
         row.removeEventListener("click", handleRowClick);
     });
 
+    // CHECKING FOR TOAST TO RUN
     const returnTimeValue = hours + ":" + minutes;
 
     const name = cells[1].innerText;
@@ -275,11 +277,14 @@ function staffIn() {
     const row = event.currentTarget;
     const id = row.getAttribute("id");
     
+        // UPDATING THE OBJECT
 
     staffMembers[id].status = "In";
     staffMembers[id].outTime = "";
     staffMembers[id].duration = "";
     staffMembers[id].returnTime = "";
+
+    // UPDATING THE TABLE USING THE OBJECT
 
     status.innerHTML = "<p>" + staffMembers[id].status + "</p>";
     outTime.innerHTML = "<p>" + staffMembers[id].outTime + "</p>";
@@ -295,8 +300,12 @@ function staffIn() {
 let deliveryId = 0; 
 let deliveryDrivers = [];
 
-    //ADD DEØIVERIES TO DELIVERY BOARD FROMT THE SCHEDUELE DELIVERY
+    //ADD DElIVERIES TO DELIVERY BOARD FROMT THE SCHEDUELE DELIVERY
+
 function addDelivery() {
+
+    // GETTING THE VALUE OF THE INPUTS
+
     let sVehicle = document.getElementById("sVehicle").value;
     let sName = document.getElementById("sName").value;
     let sSurname = document.getElementById("sSurname").value;
@@ -306,7 +315,10 @@ function addDelivery() {
 
 validateDelivery();
 
+    // VALIDATING ALL THE INPUTS BEFORE ADDING TO THE OBJECT
+
     function validateDelivery() {
+        // IF ERROR THESE GETS FILLED WITH ONLY THE INPUTS THAT HAR ERROR
         let vehicleAlert = "";
         let nameAlert = "";
         let surnameAlert = "";
@@ -370,12 +382,14 @@ validateDelivery();
         }
     
         if (validateCount == 6) {
+            // IF INPUTS ARE ALL CORRECT CREATE THE OBJECT
             let deliveryDriver = [
                 {"name": sName, "surname": sSurname, "vehicle": sVehicle, "telephone": sTelephone, "adress": sAdress, "returnTime": sReturnTime}
                 ]
                 deliveryDrivers.push(...deliveryDriver)
             createDriver();
         } else {
+            // ERROR MESSAGE WITH ONLY WHAT IS WRONG
             alert(vehicleAlert + nameAlert + surnameAlert + telephoneAlert + adressAlert + returnTimeAlert);
         };
     };
@@ -436,7 +450,7 @@ function createDeliveryTable(driver) {
         } else if (!row.parentNode) {
             clearInterval(checkReturnTime);
         }
-    }, 1000);
+    }, 10000);
 }
     // CLEAR THE ROW OF DELIVERY DRIVER
 function clearDelivery() {
@@ -446,6 +460,7 @@ function clearDelivery() {
         row.addEventListener("click", handleDeleteClick);
     });
 
+    // CONFIRMING THAT IT IS THE RIGHT DELIVERY TO BE DELETED AND THEN DELETING THE ROW AND OBJECT
     function handleDeleteClick(event) {
         const row = event.currentTarget;
         const id = row.getAttribute("id");
@@ -461,5 +476,4 @@ function clearDelivery() {
             row.removeEventListener("click", handleDeleteClick);
         });
     }
-    
 };

@@ -1,5 +1,5 @@
 # David_Hansen_sp1
-To open the app double click on the WDTapp.html icon.
+To open the app by double click on the WDTapp.html icon.
 
 log in staff members:
     Press the "In" button and click on the staff member you want to log in.
@@ -16,13 +16,15 @@ Add a Schedule a delivery:
     Telephone number must be numbers
 
     When all is input press the add and it will be added to the delivery board.
-    If some are left blank or in the wrong format a popup will tell you and the text changes to red. When its entered correctly press the Add button again and the text will change back to normal.
+    If some are left blank or in the wrong format a popup will tell you and the text changes to red. 
+    When its entered correctly press the Add button again and the text will change back to normal.
 
 Delete a delivery:
     Click on the "clear" button and click on the delivery you want to delete. 
     A popup will show that needs to be confirmed to delete that delivery.
 
-IT department info
+IT department info:
+
 
 To add staff open the wdt_app.js file and edit the users in staffMembers on line 104.
 Use the correct format:
@@ -31,8 +33,12 @@ Use the correct format:
 
 
 
-mdm web docs (https://developer.mozilla.org/en-US/)
+mdm web docs : (https://developer.mozilla.org/en-US/)
 
-w3 schools (https://www.w3schools.com/)
+w3 schools : (https://www.w3schools.com/)
 
-motorcycle icon (https://www.w3schools.com/icons/tryit.asp?filename=tryicons_fa-motorcycle)
+motorcycle icon : (https://www.w3schools.com/icons/tryit.asp?filename=tryicons_fa-motorcycle)
+
+converting minutes to hours and minutes : (https://codingbeautydev.com/blog/javascript-convert-minutes-to-hours-and-minutes/?utm_content=cmp-true)
+
+I used and edited version of this : (https://stackoverflow.com/questions/73550934/using-fetch-and-randomuser-me-how-do-i-return-multiple-results)
