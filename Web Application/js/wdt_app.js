@@ -28,6 +28,7 @@ class StaffMember extends Employee {
         this.returnTime = null;
         this.duration = duration;
         this.status = status;
+        this.outTime = null;
     };
         // TOAST
     staffMemberIsLate(returnTime) {
@@ -93,12 +94,25 @@ class DeliveryDriver extends Employee {
 
 };
 
+let StaffId = 1;
 
+        // CREATE OWN USERS HERE. ADD OR DELETE LINES AS NEEDED. BUT FOLLOW THIS FORMAT
+        // REMEMBER TO PUT THE CORRECT STAFF PICTURE IN THE IMG FOLDER WITH THE CORRECT NAME
+        // {"name": "user1", "surname": "user1", "picture": `./img/user1.jpg`, "email": "user1"},
+        // {"name": "user2", "surname": "user2", "picture": `./img/user2.jpg`, "email": "user2"}
+        // INSIDE OF THE [ ]
+let staffMembers = [
+    // {"name": "user1", "surname": "user1", "picture": `./img/user1.jpg`, "email": "user1"},
+    // {"name": "user2", "surname": "user2", "picture": `./img/user2.jpg`, "email": "user2"}
+];
 
-staffUserGet()
+if (staffMembers.length === 0) {
+    staffUserGet();
+} else {
+    createStaffTable();
+};
 
 function staffUserGet(){
-    // WHEN CREATING OWN USERS DELETE THIS RANDOM USER GENERATOR <
     // I used and edited version of this (https://stackoverflow.com/questions/73550934/using-fetch-and-randomuser-me-how-do-i-return-multiple-results)
     $.ajax({
         url: 'https://randomuser.me/api/?results=5',
@@ -108,59 +122,52 @@ function staffUserGet(){
         const user3 = data.results[2];
         const user4 = data.results[3];
         const user5 = data.results[4];
-        // END OF RANDOM USER GENERATOR >>
 
-        // CREATE OWN USERS HERE. ADD OR DELETE LINES AS NEEDED. BUT FOLLOW THIS FORMAT
-        // REMEMBER TO PUT THE CORRECT STAFF PICTURE IN THE IMG FOLDER WITH THE CORRECT NAME
-        // {"name": "user1", "surname": "user1", "picture": "./img/user1.jpg", "email": "user1"},
-        // {"name": "user2", "surname": "user2", "picture": "./img/user2.jpg", "email": "user2"}
-        // INSIDE OF THE [ ]
-let staffMembers = [
+let GeneratedStaffMembers = [
     {"name": `${user1.name.first}`, "surname": `${user1.name.last}`, "picture": `${user1.picture.large}`, "email": `${user1.email}`, "duration": "", "status": ""},
     {"name": `${user2.name.first}`, "surname": `${user2.name.last}`, "picture": `${user2.picture.large}`, "email": `${user2.email}`, "duration": "", "status": ""},
     {"name": `${user3.name.first}`, "surname": `${user3.name.last}`, "picture": `${user3.picture.large}`, "email": `${user3.email}`, "duration": "", "status": ""},
     {"name": `${user4.name.first}`, "surname": `${user4.name.last}`, "picture": `${user4.picture.large}`, "email": `${user4.email}`, "duration": "", "status": ""},
     {"name": `${user5.name.first}`, "surname": `${user5.name.last}`, "picture": `${user5.picture.large}`, "email": `${user5.email}`, "duration": "", "status": ""}
 ];
-    // GENERATING CLASS AND TABLE
-
-for(let i = 0; i <= staffMembers.length -1; i++) {
-
-    let staff = new StaffMember(staffMembers[i].name, staffMembers[i].surname, staffMembers[i].picture, staffMembers[i].email)
-
-    var table = document.getElementById("staffTable").getElementsByTagName("tbody")[0];
-
-    var row = table.insertRow(0);
-    var picture = row.insertCell(0);
-    var name = row.insertCell(1);
-    var surname = row.insertCell(2);
-    var email = row.insertCell(3);
-    var status = row.insertCell(4);
-    var outTime = row.insertCell(5);
-    var duration = row.insertCell(6);
-    var expectedReturnTime = row.insertCell(7);
-    
-    picture.innerHTML = "<img id='picture' src="+`${staff.picture}`+" alt='Staff picture'>";
-    name.innerHTML = "<p>"+staff.name+"</p>";
-    surname.innerHTML = "<p>"+staff.surname+"</p>";
-    email.innerHTML = "<p>"+staff.email+"</p>";
-    status.innerHTML = "<p>"+staff.status+"</p>";
-    outTime.innerHTML = "<p></p>";
-    duration.innerHTML = "<p>"+staff.duration+"</p>";
-    expectedReturnTime.innerHTML = "<p></p>";
-
-    // clicking on Staff pictures opens the staff picture in a new window
-
-    $("table img").click(function(){
-        window.open($(this).attr('src'));
-    });
-} 
+staffMembers.push(...GeneratedStaffMembers);
+    createStaffTable()
 }
 });
 };
 
+// GENERATING CLASS AND TABLE
+function createStaffTable() {
+for(let i = 0; i <= staffMembers.length -1; i++) {
+
+    let staff = new StaffMember(staffMembers[i].name, staffMembers[i].surname, staffMembers[i].picture, staffMembers[i].email)
+
+    let table = document.getElementById("staffTable").getElementsByTagName("tbody")[0];
+
+    let row = table.insertRow(0);
+    let picture = row.insertCell(0);
+    let nname = row.insertCell(1);
+    let surname = row.insertCell(2);
+    let email = row.insertCell(3);
+    let sstatus = row.insertCell(4);
+    let outTime = row.insertCell(5);
+    let duration = row.insertCell(6);
+    let expectedReturnTime = row.insertCell(7);
+
+    row.setAttribute("id", i);
+    
+    picture.innerHTML = "<img id='picture' src="+`${staff.picture}`+" alt='Staff picture'>";
+    nname.innerHTML = "<p>"+staff.name+"</p>";
+    surname.innerHTML = "<p>"+staff.surname+"</p>";
+    email.innerHTML = "<p>"+staff.email+"</p>";
+    sstatus.innerHTML = "<p></p>";
+    outTime.innerHTML = "<p></p>";
+    duration.innerHTML = "<p></p>";
+    expectedReturnTime.innerHTML = "<p></p>";
+};
+};
     // CHANGE STATUS OF STAFF MEMBER TO OUT AND PROMPT 
-function outBtn() {
+function staffOut() {
     const rows = document.querySelectorAll("#staffTable tbody tr");
 
     rows.forEach((row) => {
@@ -175,30 +182,49 @@ function outBtn() {
     if (howLong === null) {
         return;
     }
-    var hours = Math.floor(howLong / 60);
-    var remainingMinutes = howLong % 60;
+    let now = new Date();
+    let nowHours = now.getHours();
+    let nowMinutes = now.getMinutes();
+    let hours = Math.floor(howLong / 60);
+    let remainingMinutes = howLong % 60;
+
+    if (nowHours < 10) {
+        nowHours = "0" + nowHours;
+    }
+    if (nowMinutes < 10) {
+        nowMinutes = "0" + nowMinutes;
+    }
+
+    const row = event.currentTarget;
+    const id = row.getAttribute("id");
 
     const status = cells[4];
     const outTime = cells[5];
     const duration = cells[6];
     const returnTime = cells[7];
+    
+    staffMembers[id].status = "out";
+    staffMembers[id].outTime = nowHours +":"+ nowMinutes;
+    staffMembers[id].duration = hours + " hr and " + remainingMinutes + " min";
 
-    status.innerHTML = "<p>Out</p>";
-    outTime.innerHTML = "<p>" + currentDate + "</p>";
-    duration.innerHTML = "<p>" + hours + " hr and " + remainingMinutes + " min </p>";
+    status.innerHTML = "<p>" + staffMembers[id].status + "</p>";
+    outTime.innerHTML = "<p>" + staffMembers[id].outTime + "</p>";
+    duration.innerHTML = "<p>" + staffMembers[id].duration + "</p>";
 
-    var now = new Date();
+    
     now.setMinutes(now.getMinutes() + remainingMinutes);
     now.setHours(now.getHours() + hours);
 
     hours = now.getHours();
-    var minutes = now.getMinutes();
+    let minutes = now.getMinutes();
 
     if (minutes < 10) {
         minutes = "0" + minutes;
     }
 
-    returnTime.innerHTML = "<p>" + hours + ":" + minutes + "</p>";
+    staffMembers[id].returnTime = hours + ":" + minutes;
+
+    returnTime.innerHTML = "<p>" + staffMembers[id].returnTime + "</p>";
 
     rows.forEach((row) => {
         row.removeEventListener("click", handleRowClick);
@@ -220,7 +246,7 @@ function outBtn() {
         const currentHours = currentTime.getHours();
         const currentMinutes = currentTime.getMinutes();
         if (currentHours === hours && currentMinutes === minutes) {
-        staff.staffMemberIsLate(returnTimeValue);
+        staff.staffMemberIsLate(returnTime);
         clearInterval(checkReturnTime);
         } else if (duration.innerHTML == "<p></p>") {
             clearInterval(checkReturnTime);
@@ -230,7 +256,7 @@ function outBtn() {
 }
 
     // CHANGE STATUS OF STAFF MEMBER TO IN
-function inBtn() {
+function staffIn() {
     const rows = document.querySelectorAll("#staffTable tbody tr");
 
     rows.forEach((row) => {
@@ -246,10 +272,19 @@ function inBtn() {
     const duration = cells[6];
     const returnTime = cells[7];
 
-    status.innerHTML = "<p>In</p>";
-    outTime.innerHTML = "<p></p>";
-    duration.innerHTML = "<p></p>";
-    returnTime.innerHTML = "<p></p>";
+    const row = event.currentTarget;
+    const id = row.getAttribute("id");
+    
+
+    staffMembers[id].status = "In";
+    staffMembers[id].outTime = "";
+    staffMembers[id].duration = "";
+    staffMembers[id].returnTime = "";
+
+    status.innerHTML = "<p>" + staffMembers[id].status + "</p>";
+    outTime.innerHTML = "<p>" + staffMembers[id].outTime + "</p>";
+    duration.innerHTML = "<p>" + staffMembers[id].duration + "</p>";
+    returnTime.innerHTML = "<p>" + staffMembers[id].returnTime + "</p>";
 
     rows.forEach((row) => {
         row.removeEventListener("click", handleRowClick);
@@ -257,59 +292,113 @@ function inBtn() {
 };
 };
 
+let deliveryId = 0; 
+let deliveryDrivers = [];
+
     //ADD DEØIVERIES TO DELIVERY BOARD FROMT THE SCHEDUELE DELIVERY
-function addBtn() {
-    const sVehicle = document.getElementById("sVehicle").value;
-    const sName = document.getElementById("sName").value;
-    const sSurname = document.getElementById("sSurname").value;
-    const sTelephone = document.getElementById("sTelephone").value;
-    const sAdress = document.getElementById("sAdress").value;
-    const sReturnTime = document.getElementById("sReturnTime").value;
-    let deliveryDriver = [
-    {"name": sName, "surname": sSurname, "vehicle": sVehicle, "telephone": sTelephone, "adress": sAdress, "returnTime": sReturnTime}
-    ]
-    let driver = new DeliveryDriver(deliveryDriver[0].name, deliveryDriver[0].surname, deliveryDriver[0].vehicle, deliveryDriver[0].telephone, deliveryDriver[0].adress, deliveryDriver[0].returnTime)
+function addDelivery() {
+    let sVehicle = document.getElementById("sVehicle").value;
+    let sName = document.getElementById("sName").value;
+    let sSurname = document.getElementById("sSurname").value;
+    let sTelephone = document.getElementById("sTelephone").value;
+    let sAdress = document.getElementById("sAdress").value;
+    let sReturnTime = document.getElementById("sReturnTime").value;
 
+ validateDelivery();
 
-validateDelivery(driver)
-};
+    function validateDelivery() {
+        let vehicleAlert = "";
+        let nameAlert = "";
+        let surnameAlert = "";
+        let telephoneAlert = "";
+        let adressAlert = "";
+        let returnTimeAlert ="";
 
-function validateDelivery(driver) {
-    let validateCount = 0;
-    if (driver.vehicle.toLowerCase() === "car") {
-        driver.vehicle = '<i id="icon" class="bi bi-car-front-fill"></i>'
-        validateCount++;
-    } else if (driver.vehicle.toLowerCase() === "motorcycle"){
-        driver.vehicle = '<i id="icon" class="fa fa-motorcycle"></i>' //https://www.w3schools.com/icons/tryit.asp?filename=tryicons_fa-motorcycle
-        validateCount++;
-    } else {
-        document.getElementById("sVehicle").style.color = "red";
-    }
-
-    if (isNaN(parseFloat(driver.telephone))) {
-        document.getElementById("sTelephone").style.color = "red";
-    } else {
-        validateCount++
-    }
-
-    if (validateCount == 2) {
-        document.getElementById("sVehicle").removeAttribute("style");
-        document.getElementById("sTelephone").removeAttribute("style");
-        createDeliveryTable(driver);
-    } else {
-        alert("Not the correct format");
+        let validateCount = 0;
+        if (sVehicle.toLowerCase() === "car") {
+            sVehicle = '<i id="icon" class="bi bi-car-front-fill"></i>'
+            validateCount++;
+            document.getElementById("sVehicle").removeAttribute("style");
+        } else if (sVehicle.toLowerCase() === "motorcycle"){
+            sVehicle = '<i id="icon" class="fa fa-motorcycle"></i>' //https://www.w3schools.com/icons/tryit.asp?filename=tryicons_fa-motorcycle
+            validateCount++;
+            document.getElementById("sVehicle").removeAttribute("style");
+        } else {
+            document.getElementById("sVehicle").style.background = "red";
+            document.getElementById("sVehicle").style.color = "yellow";
+            vehicleAlert = "Vehicle could only be car or motorcycle. "
+        }
+        if (sName === "") {
+            document.getElementById("sName").style.background = "red";
+            document.getElementById("sName").style.color = "yellow";
+            nameAlert = "Have to input a name. "
+        } else {
+            validateCount++
+            document.getElementById("sName").removeAttribute("style");
+        }
+        if (sSurname === "") {
+            document.getElementById("sSurname").style.background = "red";
+            document.getElementById("sSurname").style.color = "yellow";
+            surnameAlert = "Have to input a surname. "
+        } else {
+            validateCount++
+            document.getElementById("sSurname").removeAttribute("style");
+        }
+        if (isNaN(parseFloat(sTelephone))) {
+            document.getElementById("sTelephone").style.background = "red";
+            document.getElementById("sTelephone").style.color = "yellow";
+            telephoneAlert = "Telephone number must be only numbers. "
+        } else {
+            validateCount++
+            document.getElementById("sTelephone").removeAttribute("style");
+        }
+        if (sAdress === "") {
+            document.getElementById("sAdress").style.background = "red";
+            document.getElementById("sAdress").style.color = "yellow";
+            adressAlert = "Have to input an adress. "
+        } else {
+            validateCount++
+            document.getElementById("sAdress").removeAttribute("style");
+        }
+        if (sReturnTime === "") {
+            document.getElementById("sReturnTime").style.background = "red";
+            document.getElementById("sReturnTime").style.color = "yellow";
+            returnTimeAlert = "Have to input a returntime. "
+        } else {
+            validateCount++
+            document.getElementById("sReturnTime").removeAttribute("style");
+        }
+    
+        if (validateCount == 6) {
+            let deliveryDriver = [
+                {"name": sName, "surname": sSurname, "vehicle": sVehicle, "telephone": sTelephone, "adress": sAdress, "returnTime": sReturnTime}
+                ]
+                deliveryDrivers.push(...deliveryDriver)
+            createDriver();
+        } else {
+            alert(vehicleAlert + nameAlert + surnameAlert + telephoneAlert + adressAlert + returnTimeAlert);
+        };
     };
+
+    createDriver()
+};
+function createDriver(){
+    let driver = new DeliveryDriver(deliveryDrivers[deliveryId].name, deliveryDrivers[deliveryId].surname, deliveryDrivers[deliveryId].vehicle, deliveryDrivers[deliveryId].telephone, deliveryDrivers[deliveryId].adress, deliveryDrivers[deliveryId].returnTime);
+
+createDeliveryTable(driver);
 };
 
 function createDeliveryTable(driver) {
-    var table = document.getElementById("deliveryTable").getElementsByTagName("tbody")[0];
-    var row = table.insertRow(0);
-    var vehicle = row.insertCell(0);
-    var name = row.insertCell(1);
-    var surname = row.insertCell(2);
-    var telephone = row.insertCell(3);
-    var adress = row.insertCell(4);
-    var returnTime = row.insertCell(5);
+    let table = document.getElementById("deliveryTable").getElementsByTagName("tbody")[0];
+    let row = table.insertRow(0);
+    let vehicle = row.insertCell(0);
+    let name = row.insertCell(1);
+    let surname = row.insertCell(2);
+    let telephone = row.insertCell(3);
+    let adress = row.insertCell(4);
+    let returnTime = row.insertCell(5);
+
+    row.setAttribute("id", deliveryId);
 
     vehicle.innerHTML = "<p>"+driver.vehicle+"</p>";
     name.innerHTML = "<p>"+driver.name+"</p>";
@@ -318,10 +407,20 @@ function createDeliveryTable(driver) {
     adress.innerHTML = "<p>"+driver.adress+"</p>";
     returnTime.innerHTML = "<p>"+driver.returnTime+"</p>";
 
+    document.getElementById("sVehicle").value = "";
+    document.getElementById("sName").value = "";
+    document.getElementById("sSurname").value = "";
+    document.getElementById("sTelephone").value = "";
+    document.getElementById("sAdress").value = "";
+    document.getElementById("sReturnTime").value = "";
+
+
+    deliveryId++
+
     const checkReturnTime = setInterval(() => {
-        var currentTime = new Date();
-        var currentHours = currentTime.getHours();
-        var currentMinutes = currentTime.getMinutes();
+        let currentTime = new Date();
+        let currentHours = currentTime.getHours();
+        let currentMinutes = currentTime.getMinutes();
 
         if (currentMinutes < 10) {
             currentMinutes = "0" + currentMinutes;
@@ -340,7 +439,7 @@ function createDeliveryTable(driver) {
     }, 1000);
 }
     // CLEAR THE ROW OF DELIVERY DRIVER
-function clearBtn() {
+function clearDelivery() {
     const rows = document.querySelectorAll("#deliveryTable tbody tr");
 
     rows.forEach((row) => {
@@ -349,8 +448,12 @@ function clearBtn() {
 
     function handleDeleteClick(event) {
         const row = event.currentTarget;
-        const shouldDelete = confirm("Are you sure you want to delete this row?");
+        const id = row.getAttribute("id");
+        const name = deliveryDrivers[id].name;
+        const adress = deliveryDrivers[id].adress;
+        const shouldDelete = confirm("Are you sure you want to delete " + name +"'s delivery to " + adress);
         if (shouldDelete) {
+        delete deliveryDrivers[id];
         row.parentNode.removeChild(row);
         }
 

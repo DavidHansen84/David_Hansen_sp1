@@ -42,17 +42,19 @@ tbody {
     border-bottom: 1px solid #212529;
     width: 75%;
 }
-.input2 {
-    background: #83D1E1;
-    border: #fff;
-    border-bottom: 1px solid #212529;
-}
+
 .negative {
     background-color: #dc3545;
+}
+.negative:hover {
+    background-color: red;
 }
 
 .positive {
     background-color: #198754;
+}
+.positive:hover{
+    background-color: green;
 }
 
 .btn {
@@ -62,6 +64,7 @@ tbody {
 
 .btn:hover {
     color: blue;
+    border: 1px solid #212529
 }
 
 nav {
