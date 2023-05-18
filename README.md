@@ -24,11 +24,11 @@ Delete a delivery:
 
 IT department info
 
-To add staff open the wdt_app.js file and edit the users in staffMembers on line 118.
+To add staff open the wdt_app.js file and edit the users in staffMembers on line 104.
 Use the correct format:
 {"name": "user1", "surname": "user1", "picture": `./img/user1.jpg`, "email": "user1"}
 
-To remove the get random Users delete line 101 - 111.
+
 
 
 mdm web docs (https://developer.mozilla.org/en-US/)
