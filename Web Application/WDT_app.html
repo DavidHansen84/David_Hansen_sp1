@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head onload="digitalClock()">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/wdt_app.css">
 
-<body onload="digitalClock()">
-
+</head>
+<body>
     <nav id="navbar" class="navbar navbar-expand-lg position-fixed w-100 fixed-top">
     <div class="container-fluid">
       <a class="navbar-brand" href="#"></a>
@@ -51,7 +51,7 @@
   <div class="h1">
         <figure class="figure">
             <img class="figure-img img-fluid" 
-    src="./img/Company logo.png" alt="Company Logo">
+    src="./img/Company_logo.png" alt="Company Logo">
             <figcaption class="figure-caption"></figcaption>
         </figure>
          Reception Management Dashboard</div>
@@ -76,8 +76,8 @@
                 </tbody>
                 
             </table>
-            <input onclick="outBtn()" type="button" class="btn negative" value="Out" style="float: left;">
-            <input onclick="inBtn()" type="button" class="btn positive" value="In" style="float: right;">
+            <input onclick="staffOut()" type="button" class="btn negative" value="Out" style="float: left;">
+            <input onclick="staffIn()" type="button" class="btn positive" value="In" style="float: right;">
     </div>
 
     <div class="h3">Schedule Delivery</div>
@@ -96,16 +96,16 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td><input class="input" id="sVehicle"></td>
-                    <td><input class="input" id="sName"></td>
-                    <td><input class="input" id="sSurname"></td>
-                    <td><input class="input" id="sTelephone"></td>
-                    <td><input class="input" id="sAdress"></td>
-                    <td><input class="input" size="2" type="time" id="sReturnTime"><p></td>
+                    <td><input class="input" id="sVehicle"><p></p></td>
+                    <td><input class="input" id="sName"><p></p></td>
+                    <td><input class="input" id="sSurname"><p></p></td>
+                    <td><input class="input" id="sTelephone"><p></p></td>
+                    <td><input class="input" id="sAdress"><p></p></td>
+                    <td><input class="input" size="2" type="time" id="sReturnTime"><p></p></td>
                 </tr>
                 </tbody>
             </table>
-            <input onclick="addBtn()" type="button" class="btn positive" value="Add" style="float: right;">
+            <input onclick="addDelivery()" type="button" class="btn positive" value="Add" style="float: right;">
     </div>
     
 
@@ -129,7 +129,7 @@
                 </tr>
                 </tbody>
             </table>
-            <input id="clearBtn" onclick="clearBtn()" type="button" class="btn negative" value="Clear" style="float: right;">
+            <input id="clearBtn" onclick="clearDelivery()" type="button" class="btn negative" value="Clear" style="float: right;">
     </div>
     <br>
     <div class="p-3" id="time" style="float: right;"></div>
