@@ -304,7 +304,7 @@ function addDelivery() {
     let sAdress = document.getElementById("sAdress").value;
     let sReturnTime = document.getElementById("sReturnTime").value;
 
- validateDelivery();
+validateDelivery();
 
     function validateDelivery() {
         let vehicleAlert = "";
